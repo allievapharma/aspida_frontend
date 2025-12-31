@@ -1,0 +1,199 @@
+/* @import "~font-awesome/css/font-awesome.css"; */
+
+.aise {
+  display: flex;
+  overflow: hidden;
+  /* width: 30px; */
+}
+
+.aise img {
+  height: 100%;
+  width: 40px;
+  opacity: 0.6;
+  object-fit: cover;
+  animation: aiseanimation both;
+  animation-timeline: view(10% 5%);
+}
+
+.under-line {
+  position: relative;
+}
+
+.under-line img {
+  opacity: 0.4;
+  position: absolute;
+  bottom: -4px;
+  left: 15%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: auto;
+  transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation: underlineanimation both;
+  animation-timeline: view(10% 5%);
+}
+
+@keyframes underlineanimation {
+  0% {
+    width: 0px;
+  }
+  5% {
+    width: 100px;
+  }
+  20% {
+    width: 120px;
+  }
+  to {
+    width: 150px;
+  }
+}
+
+.circle-team {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -65px;
+  right: -61px;
+  z-index: 1;
+  background: transparent;
+  border: 40px solid rgb(255, 255, 255);
+  box-shadow: rgba(87, 148, 197, 0.172) 0px 50px 100px -20px,
+    #0000004a 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.218) 0px -2px 6px 0px inset;
+}
+
+@media (max-width: 768px) {
+  .circle-team {
+    display: none;
+  }
+}
+
+/* -------------------------------------------------------animation---------------------------------------------------- */
+
+.circle {
+  height: 50px;
+  width: 50px;
+  background-color: red;
+  animation: autorotateanimation;
+  animation-timeline: view();
+}
+
+@keyframes autorotateanimation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.autoshow {
+  animation: autoshowanimation both;
+  animation-timeline: view();
+  animation-range: entry 5% cover 100vh;
+}
+@keyframes autoshowanimation {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.imageReveal {
+  height: 250px;
+  animation: imageRevealanimation both;
+  animation-timeline: view(10% 5%);
+}
+
+.imageReveal img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
+
+@keyframes imageRevealanimation {
+  from {
+    filter: saturate(0) contrast(4) brightness(0.1) blur(3px);
+    opacity: 0;
+    scale: 0.95;
+    transform: 0 4rem;
+  }
+  to {
+    filter: none;
+    opacity: 1;
+    scale: 1;
+    transform: 0 0;
+  }
+}
+
+.myFadeup {
+  animation: myFadeupanimation both;
+  animation-timeline: view();
+  animation-range: entry 5% cover 40%;
+}
+@keyframes myFadeupanimation {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+.scrollbar-horizontal {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: red blue;
+}
+
+.scrolll {
+  display: flex;
+}
+
+.scrollbar-horizontal .scrolll p {
+  font-size: 30px;
+  scroll-snap-align: start;
+  margin-right: 20px;
+}
+
+/* !----------------------------------Video loader---------------------------------------------! */
+
+.video-player {
+  max-width: 600px; /* adjust size as needed */
+  border-radius: 12px;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); */
+  object-fit: cover;
+}
+
+
+
+
+
+
+
+
+
+
+.rich-text p {
+  margin-bottom: 8px;
+}
+
+.rich-text ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.rich-text li {
+  margin-bottom: 4px;
+}

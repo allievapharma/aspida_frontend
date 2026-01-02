@@ -3,7 +3,7 @@ import ProductPage from '../components/ProductPage'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import FeaturedItems from '../components/FeaturedItems'
-import Whatsapp from '../components/whatsapp'
+import Whatsapp from '../components/Whatsapp'
 import ContactSection from '../components/ContactSection'
 import { Link } from 'react-router-dom'
 

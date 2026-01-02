@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ProductPage from "../components/ProductPage";
 import FeaturedItems from "../components/FeaturedItems";
-import Whatsapp from "../components/whatsapp";
+import Whatsapp from "../components/Whatsapp";
 import CartPage from "../components/CartPage";
 
 const Productdetails = () => {

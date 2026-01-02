@@ -51,11 +51,6 @@ function AboutSection() {
           become the world’s most trusted digital healthcare partner.
         </p>
       </div>
-
-      {/* Footer */}
-      <div className="text-center mt-20 text-sm text-gray-500 animate-fadeIn">
-        © {new Date().getFullYear()} MediWorld. All rights reserved.
-      </div>
     </div>
   );
 }

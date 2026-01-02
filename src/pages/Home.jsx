@@ -6,7 +6,7 @@ import Line from "../components/Line";
 import Testimonial from "../components/Testimonial";
 import Experience from "../components/Experience";
 import FeaturedItems from "../components/FeaturedItems";
-import Whatsapp from "../components/whatsapp";
+import Whatsapp from "../components/Whatsapp";
 import Loader from "../components/Loader";
 import axios from "axios";
 

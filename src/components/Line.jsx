@@ -1,5 +1,5 @@
 import React from "react";
-import dnaGif from "../assets/image/what'sapp/dna-ezgif.com-crop.gif";
+import dnaGif from "../assets/image/whatsapp/dna-ezgif.com-crop.gif";
 
 const Line = () => {
   return (

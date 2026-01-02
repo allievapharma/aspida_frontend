@@ -30,7 +30,7 @@ const Footer = () => {
             Information
           </h3>
           <p>
-            Welcome to Aspida Pharma Private Limited, incorporated in 2020 in
+            Welcome to Aspida Life Science, incorporated in 2020 in
             India. With one goal: to provide high-quality and affordable
             medicines to all.
           </p>
@@ -39,7 +39,7 @@ const Footer = () => {
         {/* Our Product Links */}
         <div className="w-full md:w-[45%] lg:w-[23%]">
           <h3 className="text-xl font-semibold mb-4 text-center md:text-left lg:text-center">
-            Our Product
+            Our Links
           </h3>
           <ul className="space-y-2 font-bold text-center md:text-left lg:text-center">
             <li>
@@ -85,8 +85,8 @@ const Footer = () => {
       </div>
 
       <p className="text-center mt-10 text-white text-sm">
-         © {new Date().getFullYear()} Aspida Pharma - All rights reserved.{" "}
-        <span className="text-[#11F8FE] font-semibold">Aspida Pharma</span>
+         © {new Date().getFullYear()} Aspida Life Science - All rights reserved.{" "}
+        <span className="text-[#11F8FE] font-semibold">Aspida Life Science</span>
       </p>
     </footer>
   );

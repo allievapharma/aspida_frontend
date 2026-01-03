@@ -64,7 +64,7 @@ const Signup = () => {
     return "Something went wrong";
   };
 
-  console.log(error)
+  console.log(error);
 
   // 🔹 STEP 1 – SEND OTP
   const sendOTP = async () => {
@@ -74,6 +74,7 @@ const Signup = () => {
 
     try {
       setLoading(true);
+
       const res = await fetch(
         "http://127.0.0.1:8000/auth/user/register/request-otp/",
         {
@@ -83,11 +84,16 @@ const Signup = () => {
         }
       );
 
-      const data = await res.json();
+      // 👇 HANDLE NON-JSON RESPONSES
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error("Server error (OTP service failed)");
+      }
 
       if (!res.ok) {
-        const msg = Object.values(data)[0];
-        throw new Error(Array.isArray(msg) ? msg[0] : msg);
+        throw new Error(getErrorMessage(data));
       }
 
       setSuccess("OTP sent successfully!");
@@ -137,7 +143,7 @@ const Signup = () => {
       localStorage.setItem("access_token", loginData.access);
       localStorage.setItem("refresh_token", loginData.refresh);
 
-     navigate("/Login", { replace: true });
+      navigate("/Login", { replace: true });
     } catch (err) {
       setError(err.message);
     } finally {

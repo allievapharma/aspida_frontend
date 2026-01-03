@@ -85,8 +85,8 @@ const Footer = () => {
       </div>
 
       <p className="text-center mt-10 text-white text-sm">
-         © {new Date().getFullYear()} Aspida Life Science - All rights reserved.{" "}
-        <span className="text-[#11F8FE] font-semibold">Aspida Life Science</span>
+         © {new Date().getFullYear()} Aspida Life Sciences - All rights reserved.{" "}
+        <span className="text-[#11F8FE] font-semibold">Aspida Life Sciences</span>
       </p>
     </footer>
   );

@@ -3,51 +3,82 @@ import axios from "axios";
 
 export const AuthContext = createContext();
 
+const API_BASE = "http://127.0.0.1:8000";
+
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
-    access: null,
+    accessToken: null,
     user: null,
+    loading: true,
   });
 
+  // -------------------------------
+  // Load token on app start
+  // -------------------------------
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("access_token");
 
     if (token) {
-      setAuth((prev) => ({ ...prev, access: token }));
+      setAuth((prev) => ({ ...prev, accessToken: token }));
       fetchUserProfile(token);
+    } else {
+      setAuth((prev) => ({ ...prev, loading: false }));
     }
   }, []);
 
+  // -------------------------------
+  // Fetch user profile
+  // -------------------------------
   const fetchUserProfile = async (token) => {
     try {
-      const res = await axios.get(
-        "http://127.0.0.1:8000/auth/user/profile/",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get(`${API_BASE}/auth/user/profile/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      setAuth((prev) => ({ ...prev, user: res.data }));
-    } catch (err) {
-      console.log("Failed to fetch user profile");
+      setAuth({
+        accessToken: token,
+        user: res.data,
+        loading: false,
+      });
+    } catch (error) {
+      console.error("Failed to fetch user profile");
+      logout();
     }
   };
 
+  // -------------------------------
+  // Login (after register / login)
+  // -------------------------------
   const login = async (accessToken) => {
-    localStorage.setItem("token", accessToken);
-    setAuth((prev) => ({ ...prev, access: accessToken }));
+    localStorage.setItem("access_token", accessToken);
+
+    setAuth((prev) => ({
+      ...prev,
+      accessToken,
+      loading: true,
+    }));
+
     await fetchUserProfile(accessToken);
   };
 
+  // -------------------------------
+  // Logout
+  // -------------------------------
   const logout = () => {
-    localStorage.removeItem("token");
-    setAuth({ access: null, user: null });
-    window.location.href = "/Login";
+    localStorage.removeItem("access_token");
+    setAuth({
+      accessToken: null,
+      user: null,
+      loading: false,
+    });
+    window.location.href = "/login";
   };
 
   return (
     <AuthContext.Provider value={{ auth, login, logout }}>
-      {children}
+      {!auth.loading && children}
     </AuthContext.Provider>
   );
 };

@@ -20,7 +20,7 @@ const AllProduct = () => {
   const categoryFromURL = params.get("category") || "";
   const brandFromURL = params.get("brand");
 
-  const token = localStorage.getItem("access"); // 🔹 Add this line
+const token = localStorage.getItem("access_token");  // 🔹 Add this line
 
   const [searchTerm, setSearchTerm] = useState(searchFromURL);
   const [selectedBrands, setSelectedBrands] = useState([]);

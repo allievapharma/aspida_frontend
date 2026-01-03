@@ -6,10 +6,13 @@ export const productsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:8000/",
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem("access");
+      // ✅ MUST MATCH AuthContext
+      const token = localStorage.getItem("access_token");
+
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
+
       return headers;
     },
   }),
@@ -31,7 +34,7 @@ export const productsApi = createApi({
         const params = new URLSearchParams();
 
         if (searchTerm) params.append("search", searchTerm);
-        if (category) params.append("category", category); // ✅ category slug
+        if (category) params.append("category", category);
         if (brands.length > 0) params.append("brand", brands.join(","));
         if (minPrice) params.append("min_price", minPrice);
         if (maxPrice) params.append("max_price", maxPrice);

@@ -14,7 +14,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import profile from "../assets/image/signin/profilelogo.avif";
 import { useSelector } from "react-redux";
 import { CartContext } from "../context/CartContext";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 const Header = () => {
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
@@ -35,8 +35,8 @@ const Header = () => {
     const fetchHeaderData = async () => {
       try {
         const [catRes, brandRes] = await Promise.all([
-          axios.get("http://127.0.0.1:8000/categories/"),
-          axios.get("http://127.0.0.1:8000/brands/"),
+          axiosInstance.get("/categories/"),
+          axiosInstance.get("/brands/"),
         ]);
 
         setCategories(catRes.data.results || catRes.data || []);
@@ -65,7 +65,7 @@ const Header = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      navigate(`/products?search=${encodeURIComponent(query)}`);
+      navigate(`/products/?search=${encodeURIComponent(query)}`);
       setQuery("");
     }
   };

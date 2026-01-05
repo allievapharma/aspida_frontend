@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../assets/image/logo-2-1.png";
 import signpng from "../assets/image/signin/login-animate.gif";
@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  const [username, setUsername] = useState(""); 
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -18,23 +18,23 @@ const Login = () => {
     setError("");
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/auth/user/login/", {
+      const res = await axiosInstance.post("auth/user/login/", {
         username,
         password,
       });
 
       // Correct token structure
-      const access = res.data.token.access;
-      const refresh = res.data.token.refresh;
+      const access = res.data.access || res.data.token?.access;
+      const refresh = res.data.refresh || res.data.token?.refresh;
 
       // 🔥 Correctly Save Tokens
-      localStorage.setItem("access", access);
-      localStorage.setItem("refresh", refresh);
+      localStorage.setItem("access_token", access);
+      localStorage.setItem("refresh_token", refresh);
 
       // 🔓 Pass Access Token to Context
       login(access);
 
-      navigate("/"); 
+      navigate("/");
     } catch (err) {
       console.log(err);
       setError("Invalid username or password");
@@ -45,16 +45,18 @@ const Login = () => {
     <div className="sign-back p-4">
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex justify-center items-center bg-[#045E67] rounded-xl">
-          
           <div className="w-full bg-[#045E67] p-4 rounded-t-xl justify-center flex-col hidden md:flex">
             <div className="w-full bg-[#045E67] rounded-t-xl flex justify-center">
               <img src={logo} alt="" />
             </div>
-            <img src={signpng} alt="" className="h-[225px] rounded-t-xl mix-blend-multiply" />
+            <img
+              src={signpng}
+              alt=""
+              className="h-[225px] rounded-t-xl mix-blend-multiply"
+            />
           </div>
 
           <div className="bg-white shadow-lg rounded-xl text-center w-full max-w-md">
-            
             <div className="w-full bg-[#045E67] p-4 rounded-t-xl flex justify-center block md:hidden">
               <img src={logo} alt="" />
             </div>
@@ -64,7 +66,9 @@ const Login = () => {
                 Sign In
               </h2>
 
-              {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+              {error && (
+                <p className="text-red-500 text-center mb-4">{error}</p>
+              )}
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input
@@ -111,9 +115,7 @@ const Login = () => {
                   Sign Up
                 </Link>
               </p>
-
             </div>
-
           </div>
         </div>
       </div>

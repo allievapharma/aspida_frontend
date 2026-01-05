@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/image/logo-2-1.png";
+import axiosInstance from "../utils/axiosInstance";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -75,31 +76,18 @@ const Signup = () => {
     try {
       setLoading(true);
 
-      const res = await fetch(
-        "http://127.0.0.1:8000/auth/user/register/request-otp/",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ login_input: formData.login_input }),
-        }
-      );
-
-      // 👇 HANDLE NON-JSON RESPONSES
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        throw new Error("Server error (OTP service failed)");
-      }
-
-      if (!res.ok) {
-        throw new Error(getErrorMessage(data));
-      }
+      const res = await axiosInstance.post("auth/user/register/request-otp/", {
+        login_input: formData.login_input,
+      });
 
       setSuccess("OTP sent successfully!");
       setStep(2);
     } catch (err) {
-      setError(err.message || "Failed to send OTP.");
+      const message = err.response?.data
+        ? getErrorMessage(err.response.data)
+        : "OTP service failed";
+
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -112,40 +100,25 @@ const Signup = () => {
     try {
       setLoading(true);
 
-      const res = await fetch("http://127.0.0.1:8000/auth/user/register/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      // 🔐 Register
+      await axiosInstance.post("auth/user/register/", formData);
+
+      // 🔐 Auto Login
+      const loginRes = await axiosInstance.post("auth/user/login/", {
+        username: formData.login_input,
+        password: formData.password,
       });
 
-      const data = await res.json();
+      localStorage.setItem("access_token", loginRes.data.access);
+      localStorage.setItem("refresh_token", loginRes.data.refresh);
 
-      if (!res.ok) {
-        throw new Error(getErrorMessage(data));
-      }
-
-      // SUCCESS → AUTO LOGIN
-      const loginRes = await fetch("http://127.0.0.1:8000/auth/user/login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formData.login_input,
-          password: formData.password,
-        }),
-      });
-
-      const loginData = await loginRes.json();
-
-      if (!loginRes.ok) {
-        throw new Error(getErrorMessage(loginData));
-      }
-
-      localStorage.setItem("access_token", loginData.access);
-      localStorage.setItem("refresh_token", loginData.refresh);
-
-      navigate("/Login", { replace: true });
+      navigate("/login", { replace: true });
     } catch (err) {
-      setError(err.message);
+      const message = err.response?.data
+        ? getErrorMessage(err.response.data)
+        : "Registration failed";
+
+      setError(message);
     } finally {
       setLoading(false);
     }

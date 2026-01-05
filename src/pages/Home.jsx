@@ -8,7 +8,8 @@ import Experience from "../components/Experience";
 import FeaturedItems from "../components/FeaturedItems";
 import Whatsapp from "../components/Whatsapp";
 import Loader from "../components/Loader";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
+import WhyChooseUs from "../components/WhyChooseUs";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/products/");
+        const response = await axiosInstance.get("products/");
         const allProducts = response.data.results || [];
 
         // 🔹 Group by brand
@@ -56,17 +57,17 @@ const Home = () => {
       <Header />
       <Slider />
       <Experience />
-    
 
       {/* 🔹 Show 4 random brands, each with 4 products */}
       {brandGroups.map(({ brand }) => (
-        <>
-        <FeaturedItems key={brand} brand={brand} />
-        <Line />
-        </>
+        <React.Fragment key={brand}>
+          <FeaturedItems brand={brand} />
+          <Line />
+        </React.Fragment>
       ))}
 
-        <Testimonial />
+      <Testimonial />
+      <WhyChooseUs/>
       <Footer />
       <Whatsapp />
     </div>

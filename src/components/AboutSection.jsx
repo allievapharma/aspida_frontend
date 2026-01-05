@@ -9,9 +9,10 @@ function AboutSection() {
           About <span className="text-cyan-500">Aspida</span>
         </h1>
         <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-          Your trusted partner in online healthcare — bringing authentic
-          medicines and essential healthcare products to your doorstep across
-          the world.
+          Welcome to Aspida Life Science, a fast-growing pharmaceutical and life
+          sciences company incorporated in 2020 in India. We are driven by one
+          clear purpose — to make high-quality, affordable medicines accessible
+          to everyone.
         </p>
       </div>
 
@@ -19,37 +20,55 @@ function AboutSection() {
       <div className="max-w-5xl mx-auto bg-white shadow-[rgba(0,0,0,0.05)_0px_6px_24px_0px,rgba(0,0,0,0.08)_0px_0px_0px_1px] rounded-2xl p-8 md:p-12 transition-all duration-700 ease-out animate-fadeInUp">
         <h2 className="text-2xl font-semibold text-cyan-700 mb-4">Our Story</h2>
         <p className="text-gray-700 leading-relaxed mb-4">
-          Founded with a vision to bridge the gap between patients and trusted
-          pharmacies, <b>MediWorld</b> ensures that every product meets
-          international safety and quality standards. We are dedicated to making
-          healthcare accessible, affordable, and convenient — because your
-          health deserves the best.
+          At Aspida Life Science, we combine scientific expertise, strict
+          quality standards, and ethical business practices to deliver reliable
+          healthcare solutions. Our operations are guided by compliance,
+          consistency, and a strong commitment to patient well-being.
         </p>
         <p className="text-gray-700 leading-relaxed">
-          From genuine medicines to wellness products, we deliver with care,
-          speed, and trust — across 100+ countries.
+          With a focus on long-term partnerships and continuous improvement, we
+          strive to contribute meaningfully to the healthcare ecosystem in India
+          and beyond.
         </p>
       </div>
 
       {/* Vision Section */}
       <div className="max-w-5xl mx-auto mt-12 bg-gradient-to-r from-cyan-100 to-white rounded-2xl shadow-md p-8 md:p-12 transition-all duration-700 ease-out animate-fadeInUp delay-200">
-        <h2 className="text-2xl font-semibold text-cyan-700 mb-4">Our Vision</h2>
+        <h2 className="text-2xl font-semibold text-cyan-700 mb-4">
+          Our Vision
+        </h2>
         <p className="text-gray-700 leading-relaxed mb-4">
           At <b>MediWorld</b>, our vision is to create a healthier, more
           connected world where quality healthcare is accessible to everyone —
           no matter where they live.
         </p>
         <ul className="list-disc pl-6 space-y-2 text-gray-700">
-          <li>Healthcare knows no borders.</li>
-          <li>Every patient receives care on time.</li>
+          <li>To advance global healthcare by delivering high-quality, affordable pharmaceutical solutions.</li>
+          <li>To ensure equitable access to trusted medicines across diverse markets.</li>
           <li>
-            Technology makes treatment simpler, safer, and smarter for everyone.
+          To integrate science, quality, and responsibility in everything we do.
           </li>
+          <li>To strengthen healthcare systems through reliable and compliant products.</li>
+          <li>To be recognized as a globally respected pharmaceutical organization.</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed mt-4">
-          By continuously innovating and expanding our network, we strive to
-          become the world’s most trusted digital healthcare partner.
+      </div>
+      {/* Vision Section */}
+      <div className="max-w-5xl mx-auto mt-12 bg-gradient-to-r from-white to-cyan-100 rounded-2xl shadow-md p-8 md:p-12 transition-all duration-700 ease-out animate-fadeInUp delay-200">
+        <h2 className="text-2xl font-semibold text-cyan-700 mb-4">
+          Our Mission
+        </h2>
+        <p className="text-gray-700 leading-relaxed mb-4">
+          At <b>MediWorld</b>, our vision is to create a healthier, more
+          connected world where quality healthcare is accessible to everyone —
+          no matter where they live.
         </p>
+        <ul className="list-disc pl-6 space-y-2 text-gray-700">
+          <li>To develop, manufacture, and supply safe, effective, and affordable medicines.</li>
+          <li>To maintain stringent quality standards and regulatory compliance.</li>
+          <li>To operate with integrity, transparency, and ethical governance.</li>
+          <li>To build long-term partnerships with healthcare professionals and institutions.</li>
+          <li>To drive sustainable growth through innovation and operational excellence.</li>
+        </ul>
       </div>
     </div>
   );

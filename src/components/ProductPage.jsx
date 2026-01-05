@@ -8,7 +8,7 @@ import {
   useGetProductBySlugQuery,
   useAddToCartMutation,
 } from "../features/productsApi";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { AuthContext } from "../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,7 +30,7 @@ const ProductPage = () => {
   // Cart state
   const [cartItems, setCartItems] = useState([]);
 
-  const token = localStorage.getItem("access");
+  const token = localStorage.getItem("access_token");
 
   // Redirect if no token (not logged in)
   // useEffect(() => {
@@ -43,16 +43,8 @@ const ProductPage = () => {
   // Fetch cart items
   const fetchCartItems = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/cart/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) throw new Error("Failed to fetch cart");
-      const data = await res.json();
-      console.log(data);
-      setCartItems(data.results || []);
+      const res = await axiosInstance.get("/cart/");
+      setCartItems(res.data.results || []);
     } catch (error) {
       console.log("Error loading cart:", error);
     }
@@ -69,20 +61,15 @@ const ProductPage = () => {
         position: "top-right",
         autoClose: 2000,
       });
-      setTimeout(() => navigate("/login"), 2000);
+      setTimeout(() => navigate("/login"), 200000);
       return;
     }
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/cart/",
-        { product: productId, quantity: 1 },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axiosInstance.post("/cart/", {
+        product: productId,
+        quantity: 1,
+      });
 
       toast.success("🛒 Added to Cart Successfully!", {
         position: "top-right",
@@ -291,33 +278,46 @@ const PriceDisplay = ({ product }) => (
 const ProductDescription = ({ product }) => (
   <div className="mt-12">
     <h2 className="text-xl font-bold px-3 py-2 mb-2 bg-[#E5F9F8]">
-      Description 
+      Description
     </h2>
-    <p className="text-gray-700 px-5 mb-6"><RichText html={product.description} /></p>
+    <p className="text-gray-700 px-5 mb-6">
+      <RichText html={product.description} />
+    </p>
 
-    <h2 className="text-xl font-bold px-3 py-2 mb-2 bg-[#E5F9F8]">
-      Benefits 
-    </h2>
-    <p className="text-gray-700 px-5 mb-6"> <RichText html={product.benefits} /></p>
+    <h2 className="text-xl font-bold px-3 py-2 mb-2 bg-[#E5F9F8]">Benefits</h2>
+    <p className="text-gray-700 px-5 mb-6">
+      {" "}
+      <RichText html={product.benefits} />
+    </p>
 
     <h2 className="text-xl font-bold px-3 py-2 mb-2 bg-[#E5F9F8]">
       Directions for Use
     </h2>
-    <p className="text-gray-700 px-5 mb-6"> <RichText html={product.uses} /></p>
+    <p className="text-gray-700 px-5 mb-6">
+      {" "}
+      <RichText html={product.uses} />
+    </p>
 
     <h2 className="text-xl font-bold px-3 py-2 mb-2 bg-[#E5F9F8]">
       Side Effects
     </h2>
-    <p className="text-gray-700 px-5 mb-6"> <RichText html={product.side_effects} /></p>
+    <p className="text-gray-700 px-5 mb-6">
+      {" "}
+      <RichText html={product.side_effects} />
+    </p>
 
     <h2 className="text-xl font-bold px-3 py-2 mb-2 bg-[#E5F9F8]">
       Key Dosage
     </h2>
-    <p className="text-gray-700"><RichText html={product.dosage}  /></p>
+    <p className="text-gray-700">
+      <RichText html={product.dosage} />
+    </p>
     <h2 className="text-xl font-bold px-3 py-2 mb-2 bg-[#E5F9F8]">
       Storage Conditions
     </h2>
-    <p className="text-gray-700 px-5"><RichText html={product.storage}    /></p>
+    <p className="text-gray-700 px-5">
+      <RichText html={product.storage} />
+    </p>
   </div>
 );
 

@@ -4,7 +4,7 @@ export const productsApi = createApi({
   reducerPath: "productsApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:8000/",
+    baseUrl: "https://aspidalifesciences.com/api/",
     prepareHeaders: (headers) => {
       // ✅ MUST MATCH AuthContext
       const token = localStorage.getItem("access_token");

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useNavigate, Link } from "react-router-dom";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
 
-  const API_BASE = "http://127.0.0.1:8000/auth/user";
 
   const [step, setStep] = useState(1);
 
@@ -53,14 +52,18 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(`${API_BASE}/password/forgot/`, {
+      const res = await axiosInstance.post("auth/user/password/forgot/", {
         identifier,
       });
 
       setSuccess(res.data.message || "OTP sent successfully");
       setStep(2);
     } catch (err) {
-      setError(getErrorMessage(err.response?.data));
+      setError(
+        err.response?.data
+          ? getErrorMessage(err.response.data)
+          : "OTP service failed"
+      );
     } finally {
       setLoading(false);
     }
@@ -82,7 +85,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await axios.post(`${API_BASE}/password/reset/`, {
+      const res = await axiosInstance.post("auth/user/password/reset/", {
         identifier,
         otp,
         new_password: newPassword,
@@ -91,18 +94,18 @@ const ResetPassword = () => {
 
       setSuccess(res.data.message || "Password reset successful");
 
-      // Reset state
       setIdentifier("");
       setOtp("");
       setNewPassword("");
       setConfirmPassword("");
 
-      // Redirect after 2 seconds
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
-      setError(getErrorMessage(err.response?.data));
+      setError(
+        err.response?.data
+          ? getErrorMessage(err.response.data)
+          : "Password reset failed"
+      );
     } finally {
       setLoading(false);
     }
@@ -195,4 +198,3 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
- 

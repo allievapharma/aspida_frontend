@@ -1,24 +1,18 @@
 import { createContext, useState } from "react";
+import axiosInstance from "../utils/axiosInstance";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-  const token = localStorage.getItem("access");
 
   // ------------------------------
   // 1️⃣ Fetch all cart items
   // ------------------------------
   const fetchCartItems = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/cart/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await res.json();
-      setCartItems(data.results || []);
+      const res = await axiosInstance.get("/cart/");
+      setCartItems(res.data.results || []);
     } catch (error) {
       console.error("Error loading cart:", error);
     }
@@ -31,13 +25,8 @@ export const CartProvider = ({ children }) => {
     if (newQty < 1) return;
 
     try {
-      await fetch(`http://127.0.0.1:8000/cart/${itemId}/`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ quantity: newQty }),
+      await axiosInstance.patch(`/cart/${itemId}/`, {
+        quantity: newQty,
       });
 
       fetchCartItems(); // refresh
@@ -51,12 +40,7 @@ export const CartProvider = ({ children }) => {
   // ------------------------------
   const removeItem = async (itemId) => {
     try {
-      await fetch(`http://127.0.0.1:8000/cart/${itemId}/`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axiosInstance.delete(`/cart/${itemId}/`);
 
       fetchCartItems(); // refresh
     } catch (error) {
@@ -69,13 +53,8 @@ export const CartProvider = ({ children }) => {
   // ------------------------------
   const addToCart = async (productId) => {
     try {
-      await fetch("http://127.0.0.1:8000/cart/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ product: productId }),
+      await axiosInstance.post("/cart/", {
+        product: productId,
       });
 
       fetchCartItems();

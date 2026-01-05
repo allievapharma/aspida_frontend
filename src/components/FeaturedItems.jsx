@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Underline from "../assets/image/underline/underline.svg";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
+
 
 const FeaturedItems = ({ brand }) => {
   const [products, setProducts] = useState([]);
@@ -12,9 +13,18 @@ const FeaturedItems = ({ brand }) => {
 
     setLoading(true);
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/products/?subcategory=&brand_name=${brand}&manufacturer=&bestseller=unknown&prescription_required=unknown&available=unknown&country=`
-      );
+      const response = await axiosInstance.get("/products/", {
+        params: {
+          subcategory: "",
+          brand_name: brand,
+          manufacturer: "",
+          bestseller: "unknown",
+          prescription_required: "unknown",
+          available: "unknown",
+          country: "",
+        },
+      });
+
       setProducts(response.data.results || []);
     } catch (err) {
       console.error("API Error:", err);
@@ -41,6 +51,8 @@ const FeaturedItems = ({ brand }) => {
   };
 
   const randomProducts = getRandomProducts(products, 4);
+
+  console.log("FeaturedItems - brand:", brand, "products:", products);
 
   return (
     <section className="myFadeup bg-white py-12 sm:py-16 lg:py-15">

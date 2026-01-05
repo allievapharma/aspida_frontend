@@ -1,9 +1,7 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 export const AuthContext = createContext();
-
-const API_BASE = "http://127.0.0.1:8000";
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
@@ -12,67 +10,38 @@ export const AuthProvider = ({ children }) => {
     loading: true,
   });
 
-  // -------------------------------
-  // Load token on app start
-  // -------------------------------
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-
     if (token) {
       setAuth((prev) => ({ ...prev, accessToken: token }));
-      fetchUserProfile(token);
+      fetchUserProfile();
     } else {
       setAuth((prev) => ({ ...prev, loading: false }));
     }
   }, []);
 
-  // -------------------------------
-  // Fetch user profile
-  // -------------------------------
-  const fetchUserProfile = async (token) => {
+  const fetchUserProfile = async () => {
     try {
-      const res = await axios.get(`${API_BASE}/auth/user/profile/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const res = await axiosInstance.get("/auth/user/profile/");
       setAuth({
-        accessToken: token,
+        accessToken: localStorage.getItem("access_token"),
         user: res.data,
         loading: false,
       });
     } catch (error) {
-      console.error("Failed to fetch user profile");
       logout();
     }
   };
 
-  // -------------------------------
-  // Login (after register / login)
-  // -------------------------------
   const login = async (accessToken) => {
     localStorage.setItem("access_token", accessToken);
-
-    setAuth((prev) => ({
-      ...prev,
-      accessToken,
-      loading: true,
-    }));
-
-    await fetchUserProfile(accessToken);
+    setAuth((prev) => ({ ...prev, accessToken, loading: true }));
+    await fetchUserProfile();
   };
 
-  // -------------------------------
-  // Logout
-  // -------------------------------
   const logout = () => {
     localStorage.removeItem("access_token");
-    setAuth({
-      accessToken: null,
-      user: null,
-      loading: false,
-    });
+    setAuth({ accessToken: null, user: null, loading: false });
     window.location.href = "/login";
   };
 

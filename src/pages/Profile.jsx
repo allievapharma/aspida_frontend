@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
-const API_BASE_URL = "http://127.0.0.1:8000";
+import axiosInstance from "../utils/axiosInstance";
+import { AuthContext } from "../context/AuthContext";
 
 const Profile = () => {
   const { auth, logout } = useContext(AuthContext);
@@ -14,12 +12,13 @@ const Profile = () => {
   const [formData, setFormData] = useState({});
   const [preview, setPreview] = useState(null);
   const [editMode, setEditMode] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   /* =========================
-     FETCH PROFILE
+      FETCH PROFILE
   ========================== */
   useEffect(() => {
     if (!auth?.access) {
@@ -29,19 +28,14 @@ const Profile = () => {
 
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/auth/user/profile/`, {
-          headers: {
-            Authorization: `Bearer ${auth.access}`,
-          },
-        });
-
+        const res = await axiosInstance.get("auth/user/profile/");
         const profile = res.data.profile;
 
         setUser(profile);
         setFormData(profile);
         setPreview(
           profile.profile_photo
-            ? `${API_BASE_URL}${profile.profile_photo}`
+            ? `${axiosInstance.defaults.baseURL}${profile.profile_photo}`
             : null
         );
       } catch (err) {
@@ -56,7 +50,7 @@ const Profile = () => {
   }, [auth, logout, navigate]);
 
   /* =========================
-     INPUT HANDLER
+      INPUT HANDLER
   ========================== */
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -70,7 +64,7 @@ const Profile = () => {
   };
 
   /* =========================
-     UPDATE PROFILE
+      UPDATE PROFILE
   ========================== */
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -82,36 +76,28 @@ const Profile = () => {
 
       Object.keys(formData).forEach((key) => {
         if (key === "profile_photo") {
-          // append ONLY if user selected a new image
           if (formData.profile_photo instanceof File) {
             data.append("profile_photo", formData.profile_photo);
           }
-        } else {
-          if (formData[key] !== null && formData[key] !== undefined) {
-            data.append(key, formData[key]);
-          }
+        } else if (formData[key] !== null && formData[key] !== undefined) {
+          data.append(key, formData[key]);
         }
       });
 
-      const res = await axios.patch(
-        `${API_BASE_URL}/auth/user/profile/`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.access}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = await axiosInstance.patch("auth/user/profile/", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       const profile = res.data.profile;
 
       setUser(profile);
-      const { profile_photo, ...rest } = profile;
-      setFormData(rest);
+      setFormData(profile);
       setPreview(
-        profile.profile_photo ? `${API_BASE_URL}${profile.profile_photo}` : null
+        profile.profile_photo
+          ? `${axiosInstance.defaults.baseURL}${profile.profile_photo}`
+          : null
       );
+
       setEditMode(false);
       setSuccess("Profile updated successfully!");
     } catch (err) {
@@ -119,29 +105,29 @@ const Profile = () => {
     }
   };
 
-  console.log(formData.profile_photo);
-
-
   /* =========================
-     SAFE GUARDS
+      SAFETY
   ========================== */
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (!user) return <p className="text-center mt-10">Profile not found</p>;
+  if (loading) {
+    return <p className="text-center mt-10">Loading...</p>;
+  }
+
+  if (!user) {
+    return <p className="text-center mt-10">Profile not found</p>;
+  }
 
   /* =========================
-     UI
+      UI
   ========================== */
   return (
     <div className="sign-back min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg">
-        <Link
-          to="/"
-          className="text-gray-700 font-semibold flex items-center gap-1"
-        >
+        {/* BACK */}
+        <Link to="/" className="flex items-center gap-1 text-gray-700 mb-4">
           <ArrowBackIcon /> Back
         </Link>
 
-        <h2 className="text-2xl font-bold my-4 text-center">My Profile</h2>
+        <h2 className="text-2xl font-bold text-center mb-4">My Profile</h2>
 
         {/* PROFILE IMAGE */}
         <div className="flex justify-center mb-4">
@@ -155,9 +141,12 @@ const Profile = () => {
           />
         </div>
 
-        {error && <p className="text-red-500 text-center">{error}</p>}
-        {success && <p className="text-green-600 text-center">{success}</p>}
+        {error && <p className="text-red-600 text-center mb-2">{error}</p>}
+        {success && (
+          <p className="text-green-600 text-center mb-2">{success}</p>
+        )}
 
+        {/* VIEW MODE */}
         {!editMode ? (
           <>
             <div className="space-y-2 text-gray-800">
@@ -167,9 +156,6 @@ const Profile = () => {
               <p>
                 <b>Email:</b> {user.email || "N/A"}
               </p>
-              {/* <p>
-                <b>Phone:</b> {user.phone_number || "N/A"}
-              </p> */}
               <p>
                 <b>First Name:</b> {user.first_name || "N/A"}
               </p>
@@ -201,6 +187,7 @@ const Profile = () => {
             </button>
           </>
         ) : (
+          /* EDIT MODE */
           <form onSubmit={handleUpdate} className="space-y-3">
             <input
               type="text"
@@ -277,6 +264,7 @@ const Profile = () => {
           </form>
         )}
 
+        {/* LOGOUT */}
         <button
           onClick={logout}
           className="mt-6 w-full bg-red-600 text-white py-2 rounded-lg"

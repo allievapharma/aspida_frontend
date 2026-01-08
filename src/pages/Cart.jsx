@@ -90,17 +90,18 @@ const Cart = () => {
                     {/* LEFT: PRODUCT IMAGE + DETAILS */}
                     <div className="flex items-center gap-4">
                       <img
-                        src={`http://127.0.0.1:8000${image}`}
+                        src={`https://aspidalifesciences.com${image}`}
                         alt={name}
                         className="w-20 h-20 rounded-md object-cover"
                       />
 
                       <div>
-                        
                         <h3 className="font-semibold">{name}</h3>
 
                         <div className="block gap-2 items-center sm:flex">
-                          <p className="font-bold text-[18px]">₹{selling_price}</p>
+                          <p className="font-bold text-[18px]">
+                            ₹{selling_price}
+                          </p>
                           <p className="line-through text-gray-500">
                             ₹{base_price}
                           </p>

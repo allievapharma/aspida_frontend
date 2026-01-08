@@ -14,6 +14,8 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
 import ErrorBoundary from "./components/ErrorBoundary"; // ✅ ADD THIS
+import Policy from "./pages/Policy";
+import Conditions from "./pages/Conditions";
 
 function App() {
   useGetCartQuery();
@@ -35,6 +37,9 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/Signup" element={<Signup />} />
+          <Route path="/Policy" element={<Policy/>} />
+          <Route path="/Conditions" element={<Conditions/>} />
+
 
           <Route
             path="/profile"

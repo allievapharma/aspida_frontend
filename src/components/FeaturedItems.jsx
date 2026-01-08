@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Underline from "../assets/image/underline/underline.svg";
 import axiosInstance from "../utils/axiosInstance";
 
-
 const FeaturedItems = ({ brand }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -97,14 +96,18 @@ const FeaturedItems = ({ brand }) => {
                     <h3 className="text-xs font-bold text-gray-900 sm:text-sm md:text-base">
                       {item.name}
                     </h3>
+                    <p>{item.salt_compositions}</p>
                   </div>
 
                   <div className="text-right">
-                    <p className="text-xs font-bold text-gray-900 sm:text-sm md:text-base">
+                    {/* <p className="text-xs font-bold text-gray-900 sm:text-sm md:text-base">
                       ₹{item.selling_price}
-                    </p>
+                    </p> */}
+                    <h5 className="text-sm text-[#00A098]">
+                      <strong>MRP</strong>
+                    </h5>
                     {item.base_price && (
-                      <del className="mt-0.5 text-xs sm:text-sm font-bold text-gray-500">
+                      <del className="mt-0.5 text-bold  sm:text-sm font-bold no-underline">
                         ₹{item.base_price}
                       </del>
                     )}

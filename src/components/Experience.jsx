@@ -11,7 +11,7 @@ const Experience = () => {
   return (
     <section
       ref={ref}
-      className="py-10 bg-gray-100 sm:py-16 lg:py-24 relative overflow-hidden"
+      className="py-10 myFadeup bg-gray-100 sm:py-16 lg:py-24 relative overflow-hidden"
     >
       <div className="circle-team"></div>
       <div className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
@@ -20,7 +20,7 @@ const Experience = () => {
             Numbers tell our story
           </h2>
           <p className="mt-3 text-xl leading-relaxed text-gray-600 md:mt-8">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.
+            Built on trust, quality, and consistent service, our journey is defined by measurable impact and long-term partnerships.
           </p>
         </div>
 
@@ -40,10 +40,10 @@ const Experience = () => {
           <div>
             <h3 className="font-bold text-7xl">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-blue-600">
-                {inView && <CountUp end={4821} duration={3} />}
+                {inView && <CountUp end={4821} duration={3} />}+
               </span>
             </h3>
-            <p className="mt-4 text-xl font-medium text-gray-900">Projects delivered</p>
+            <p className="mt-4 text-xl font-medium text-gray-900">Medicine delivered</p>
             <p className="text-base mt-0.5 text-gray-500">In last 6 years</p>
           </div>
 

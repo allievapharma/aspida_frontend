@@ -79,7 +79,7 @@ const Header = () => {
         <div className="topp-head flex justify-between items-center gap-4 text-black font-semibold">
           <div className="flex justify-center items-center gap-2">
             <img src={gmail} alt="" className="w-[15px] md:w-[25px]" />
-            <p>info@aspida.com</p>
+            <p>info@aspidalifesciences.com</p>
           </div>
 
           <div className="top-header-social items-center gap-4 hidden md:flex">
@@ -113,7 +113,7 @@ const Header = () => {
             {/* Dropdown */}
             <div className="groups block py-3 relative cursor-pointer whitespace-nowrap">
               <div className="flex">
-                <p>categories</p>
+                <p>Categories</p>
                 <p className="arrow-ro">
                   <ArrowDropDownIcon />
                 </p>
@@ -121,7 +121,7 @@ const Header = () => {
               <div className="dropdown hidden p-2 mt-2 space-y-1 absolute bg-white text-black rounded shadow-lg">
                 {categories.length === 0 ? (
                   <p className="px-2 py-1 text-sm text-gray-400">
-                    No categories
+                    No Categories
                   </p>
                 ) : (
                   categories.map((cat) => (
@@ -267,28 +267,98 @@ const Header = () => {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="md:hidden bg-white text-black shadow-lg border-t border-cyan-600">
-            <a href="/" className="block px-6 py-3">
-              Home
+            <a href="/products" className="block px-6 py-3 hover:bg-[#E5F9F8]">
+              All Medicine
             </a>
 
-            <div className="groups block px-6 py-3">
-              <p>Service</p>
+            <div className="groups block px-6 py-3 ">
+              <div className="flex">
+                <p>Categories</p>
+                <p className="arrow-ro">
+                  <ArrowDropDownIcon />
+                </p>
+              </div>
               <div className="dropdown hidden pl-6 mt-2 space-y-1">
-                <p className="py-2 px-2">Medicine 1</p>
-                <p className="py-2 px-2">Medicine 2</p>
-                <p className="py-2 px-2">Medicine 3</p>
+                {categories.length === 0 ? (
+                  <p className="px-2 py-1 text-sm text-gray-400">
+                    No categories
+                  </p>
+                ) : (
+                  categories.map((cat) => (
+                    <Link
+                      key={cat.slug}
+                      to={`/products?category=${cat.slug}`}
+                      className="block px-2 py-2 hover:bg-[#E5F9F8]"
+                    >
+                      {cat.name}
+                    </Link>
+                  ))
+                )}
+              </div>
+            </div>
+            <div className="groups block px-6 py-3 ">
+              <div className="flex">
+                <p>Brand</p>
+                <p className="arrow-ro">
+                  <ArrowDropDownIcon />
+                </p>
+              </div>
+              <div className="dropdown hidden pl-6 mt-2 space-y-1">
+                {brands.length === 0 ? (
+                  <p className="px-2 py-1 text-sm text-gray-400">No brands</p>
+                ) : (
+                  brands.map((brand) => (
+                    <Link
+                      key={brand.slug}
+                      to={`/products?brand=${brand.slug}`}
+                      className="block px-2 py-2 hover:bg-[#E5F9F8]"
+                    >
+                      {brand.name}
+                    </Link>
+                  ))
+                )}
               </div>
             </div>
 
-            <a href="/about" className="block px-6 py-3">
+            <a href="/about" className="block px-6 py-3 hover:bg-[#E5F9F8]">
               About Us
             </a>
-            <a href="/contact" className="block px-6 py-3">
+            <a href="/contact" className="block px-6 py-3 hover:bg-[#E5F9F8]">
               Contact
             </a>
 
-            <button className="w-full bg-cyan-600 text-white py-3 font-semibold hover:bg-cyan-500 transition">
-              Book Now
+            <button className="text-[#017F80] w-[100%] transition bg-cyan-600 text-white py-2 font-semibold ">
+              <nav >
+                {auth?.user ? (
+                  <div className="relative groups block py-2 cursor-pointer whitespace-nowrap">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={profile}
+                        alt=""
+                        className="w-[40px] rounded-full object-cover mx-auto"
+                      />
+                    </div>
+
+                    <div className="absolute dropdown hidden whitespace-nowrap top-[174%] left-1/2 -translate-x-1/2 -translate-y-1/2 p-2 mt-2 mb-2 bg-white text-black rounded shadow-lg">
+                      <Link to="/profile">
+                        <p className="py-2 px-2">Profile</p>
+                      </Link>
+                      <button
+                        onClick={logout}
+                        className="bg-red-500 text-white py-2 px-4 rounded"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <Link to="/Login">
+                    <button className="text-white p-[11px] rounded-md transition">
+                      Sign In
+                    </button>
+                  </Link>
+                )}
+              </nav>
             </button>
           </div>
         )}

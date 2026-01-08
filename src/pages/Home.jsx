@@ -10,6 +10,7 @@ import Whatsapp from "../components/Whatsapp";
 import Loader from "../components/Loader";
 import axiosInstance from "../utils/axiosInstance";
 import WhyChooseUs from "../components/WhyChooseUs";
+import AboutSection from "../components/AboutSection";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -56,6 +57,7 @@ const Home = () => {
     <div>
       <Header />
       <Slider />
+      <AboutSection/>
       <Experience />
 
       {/* 🔹 Show 4 random brands, each with 4 products */}

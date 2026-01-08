@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import ProductPage from "../components/ProductPage";
 import FeaturedItems from "../components/FeaturedItems";
 import Whatsapp from "../components/Whatsapp";
-import CartPage from "../components/CartPage";
+
 
 const Productdetails = () => {
   const { slug, name } = useParams(); // slug for product, name for brand
@@ -22,7 +22,7 @@ const Productdetails = () => {
   const productBrand = product?.brand || brand;
 
   return (
-    <div>
+    <>
       <Header />
 
       {slug && <ProductPage product={product} loading={productLoading} />}
@@ -31,9 +31,8 @@ const Productdetails = () => {
       <FeaturedItems brand={productBrand} />
 
       <Footer />
-      <CartPage />
       <Whatsapp />
-    </div>
+    </>
   );
 };
 

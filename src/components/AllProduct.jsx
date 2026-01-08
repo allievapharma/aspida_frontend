@@ -20,7 +20,7 @@ const AllProduct = () => {
   const categoryFromURL = params.get("category") || "";
   const brandFromURL = params.get("brand");
 
-const token = localStorage.getItem("access_token");  // 🔹 Add this line
+  const token = localStorage.getItem("access_token"); // 🔹 Add this line
 
   const [searchTerm, setSearchTerm] = useState(searchFromURL);
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -101,7 +101,7 @@ const token = localStorage.getItem("access_token");  // 🔹 Add this line
 
     try {
       await axios.post(
-        "http://127.0.0.1:8000/cart/",
+        "https://aspidalifesciences.com/api/cart/",
         { product: productId, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -219,36 +219,39 @@ const token = localStorage.getItem("access_token");  // 🔹 Add this line
               <p className="mt-4 text-gray-500">No products found</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {products.map((product) => (
-                <div className="bg-white group shadow-md rounded-xl overflow-hidden flex flex-col hover:border hover:border-[#017F80] transition">
-                  <div className="w-full h-64 flex items-center justify-center overflow-hidden relative">
-                    <img
-                      src={product.images?.[0]?.image || "/placeholder.jpg"}
-                      alt={product.name}
-                      className="w-full h-full object-contain p-3 group-hover:scale-110 transition-transform duration-300"
-                    />
-                    {product.discount_percentage && (
-                      <span className="absolute bottom-3 right-3 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                        {parseFloat(product.discount_percentage).toFixed(1)}%
-                        Off
-                      </span>
-                    )}
-                  </div>
+                <div className="myFadeup bg-white group shadow-md rounded-xl overflow-hidden flex flex-col hover:border hover:border-[#017F80] transition">
+                  <Link key={product.id} to={`/products/${product.slug}`}>
+                    <div className="w-full h-64 items-center justify-center overflow-hidden relative">
+                      <img
+                        src={product.images?.[0]?.image || "/placeholder.jpg"}
+                        alt={product.name}
+                        className="w-full h-full object-contain p-3 group-hover:scale-110 transition-transform duration-300"
+                      />
+                      {product.discount_percentage && (
+                        <span className="absolute bottom-3 right-3 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                          {parseFloat(product.discount_percentage).toFixed(1)}%
+                          Off
+                        </span>
+                      )}
+                    </div>
+                  </Link>
 
                   <div className="px-4 pb-4 flex flex-col flex-grow">
                     <Link key={product.id} to={`/products/${product.slug}`}>
-                      <h3 className="font-semibold text-sm mt-2 line-clamp-2">
+                      <h3 className="font-bold text-sm mt-2 line-clamp-2">
                         {product.name}
                       </h3>
+                      <p>{product.salt_compositions}</p>
 
-                      <div className="mt-2">
-                        <span className="text-red-500 line-through text-xs">
-                          ₹{product.base_price}
+                      <div className="mt-2 text-[#017F80]">
+                        <span className=" text-l font-bold">
+                          ₹ {product.base_price}
                         </span>
-                        <span className="text-[#017F80] text-base font-bold ml-2">
+                        {/* <span className="text-[#017F80] text-base font-bold ml-2">
                           ₹{product.selling_price}
-                        </span>
+                        </span> */}
                       </div>
                     </Link>
                     <div className="flex gap-4 w-full mt-4">

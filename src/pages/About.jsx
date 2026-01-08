@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import Brand from "../components/Brand";
 import AboutSection from "../components/AboutSection";
+import Mission from "../components/Mission";
 
 const About = () => {
   return (
@@ -20,6 +21,7 @@ const About = () => {
         </div>
       </div>
       <AboutSection/>
+      <Mission/>
       <Footer />
     </>
   );

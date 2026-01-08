@@ -126,7 +126,7 @@ const ProductPage = () => {
                 {/* Zoom Window */}
                 {showZoom && (
                   <div
-                    className="zoomproduct absolute z-10 top-0 right-[-48vw] xl:right-[-580px] w-[400px] lg:w-[550px] h-[400px] hidden md:block border border-[#017F80] rounded-lg bg-no-repeat shadow-lg"
+                    className="zoomproduct absolute z-10 top-0 right-[-48vw] xl:right-[-580px] w-[400px] lg:w-[550px] h-[500px] hidden md:block border border-[#017F80] rounded-lg bg-no-repeat shadow-lg"
                     style={{
                       backgroundImage: `url(${currentImage})`,
                       backgroundSize: "200%",
@@ -257,7 +257,7 @@ const ProductDetailsTable = ({ product }) => (
 
 const DetailRow = ({ label, value }) => (
   <tr>
-    <td className="px-4 py-2 font-bold">{label}:</td>
+    <td className="px-4 py-2 bg-[#E5F9F8] font-bold">{label}:</td>
     <td className="px-4 py-2">{value}</td>
   </tr>
 );
@@ -265,13 +265,18 @@ const DetailRow = ({ label, value }) => (
 const PriceDisplay = ({ product }) => (
   <>
     <div className="flex items-center gap-3 mt-4">
-      <span className="text-3xl font-bold">₹{product.selling_price}</span>
-      <span className="line-through text-gray-500">₹{product.base_price}</span>
-      <span className="text-green-600">
+       <span className="text-gray-500 font-semibold">MRP:-</span>
+      <span className="text-xl font-bold">₹ {product.base_price}</span>
+     
+      {/* <span className="line-through text-gray-500">₹{product.base_price}</span> */}
+      {/* <span className="text-green-600">
         Save {product.discount_percentage.toFixed(2)}%
-      </span>
+      </span> */}
+      {/* <span className="text-green-600">
+        Save {(product.discount_percentage ?? 0).toFixed(2)}%
+      </span> */}
     </div>
-    <p>(Inclusive of all taxes)</p>
+    {/* <p>(Inclusive of all taxes)</p> */}
   </>
 );
 

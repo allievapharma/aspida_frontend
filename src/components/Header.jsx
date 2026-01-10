@@ -79,7 +79,7 @@ const Header = () => {
         <div className="topp-head flex justify-between items-center gap-4 text-black font-semibold">
           <div className="flex justify-center items-center gap-2">
             <img src={gmail} alt="" className="w-[15px] md:w-[25px]" />
-            <p>info@aspidalifesciences.com</p>
+            <p className="text-[10px] sm:text-[15px]">info@aspidalifesciences.com</p>
           </div>
 
           <div className="top-header-social items-center gap-4 hidden md:flex">
@@ -111,27 +111,47 @@ const Header = () => {
             </Link>
 
             {/* Dropdown */}
-            <div className="groups block py-3 relative cursor-pointer whitespace-nowrap">
-              <div className="flex">
+            <div className="group relative cursor-pointer whitespace-nowrap py-3">
+              <div className="flex items-center gap-1">
                 <p>Categories</p>
-                <p className="arrow-ro">
-                  <ArrowDropDownIcon />
-                </p>
+                <ArrowDropDownIcon />
               </div>
-              <div className="dropdown hidden p-2 mt-2 space-y-1 absolute bg-white text-black rounded shadow-lg">
+
+              {/* Main Dropdown */}
+              <div className="absolute text-black left-0 mt-2 hidden w-56 rounded bg-white shadow-lg group-hover:block">
                 {categories.length === 0 ? (
-                  <p className="px-2 py-1 text-sm text-gray-400">
+                  <p className="px-4 py-2 text-sm text-gray-400">
                     No Categories
                   </p>
                 ) : (
                   categories.map((cat) => (
-                    <Link
-                      key={cat.slug}
-                      to={`/products?category=${cat.slug}`}
-                      className="block px-2 py-2 hover:bg-[#E5F9F8]"
-                    >
-                      {cat.name}
-                    </Link>
+                    <div key={cat.slug} className="group/sub relative">
+                      {/* Category */}
+                      <Link
+                        to={`/products?category=${cat.slug}`}
+                        className="flex items-center justify-between px-4 py-2 hover:bg-[#E5F9F8]"
+                      >
+                        {cat.name}
+                        {cat.subcategories?.length > 0 && (
+                          <span className="text-gray-500">▶</span>
+                        )}
+                      </Link>
+
+                      {/* Subcategory Dropdown */}
+                      {cat.subcategories?.length > 0 && (
+                        <div className="absolute left-full top-0 hidden w-52 rounded bg-white shadow-lg group-hover/sub:block">
+                          {cat.subcategories.map((sub) => (
+                            <Link
+                              key={sub.slug}
+                              to={`/products/?category=${cat.slug}&subcategory=${sub.slug}`}
+                              className="block px-4 py-2 hover:bg-[#E5F9F8]"
+                            >
+                              {sub.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))
                 )}
               </div>
@@ -328,7 +348,7 @@ const Header = () => {
             </a>
 
             <button className="text-[#017F80] w-[100%] transition bg-cyan-600 text-white py-2 font-semibold ">
-              <nav >
+              <nav>
                 {auth?.user ? (
                   <div className="relative groups block py-2 cursor-pointer whitespace-nowrap">
                     <div className="flex items-center gap-4">

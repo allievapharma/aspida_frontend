@@ -27,7 +27,7 @@ const Footer = () => {
 
         {/* Information Section */}
         <div className="w-full md:w-[45%] lg:w-[23%]">
-          <h3 className="text-xl font-semibold mb-4 text-center md:text-left">
+          <h3 className="text-xl font-semibold mb-4 text-start sm:text-center md:text-left">
             Information
           </h3>
           <p>
@@ -38,10 +38,10 @@ const Footer = () => {
 
         {/* Our Product Links */}
         <div className="w-full md:w-[45%] lg:w-[23%]">
-          <h3 className="text-xl font-semibold mb-4 text-center md:text-left lg:text-center">
+          <h3 className="text-xl font-semibold mb-4 text-start sm:text-center md:text-left lg:text-center">
             Our Links
           </h3>
-          <ul className="space-y-2 font-bold text-center md:text-left lg:text-center">
+          <ul className="space-y-2 font-bold text-start sm:text-center md:text-left lg:text-center">
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -58,9 +58,9 @@ const Footer = () => {
         </div>
 
         {/* Quick Links */}
-        <div className="w-full text-center md:w-[45%] lg:w-[23%]">
+        <div className="w-full text-start sm:text-center md:w-[45%] lg:w-[23%]">
           {/* Header */}
-          <div className="flex items-center justify-center text-center md:justify-start mb-4 lg:justify-center">
+          <div className="flex items-start justify-start sm:items-center justify-center text-start sm:text-center md:justify-start mb-4 lg:justify-center">
             <span className="text-xl font-semibold mr-2">Quick Contact</span>
           </div>
 

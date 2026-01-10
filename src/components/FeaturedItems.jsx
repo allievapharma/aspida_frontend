@@ -66,11 +66,11 @@ const FeaturedItems = ({ brand }) => {
           </p> */}
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mt-8 lg:mt-10 lg:gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 mt-8 lg:mt-10 lg:gap-4 lg:grid-cols-4">
           {randomProducts.map((item) => (
             <div
               key={item.id}
-              className="relative flex flex-col justify-between group border border-white shadow-[0px_6px_24px_0px_rgba(0,0,0,0.05),_0px_0px_0px_1px_rgba(0,0,0,0.08)] rounded-xl p-4 sm:p-6 hover:border hover:border-[#017F80]"
+              className="relative flex flex-col justify-between group border border-white shadow-[0px_6px_24px_0px_rgba(0,0,0,0.05),_0px_0px_0px_1px_rgba(0,0,0,0.08)] rounded-xl p-2 sm:p-6 hover:border hover:border-[#017F80]"
             >
               <div className="relative overflow-hidden w-full h-45 sm:h-56 md:h-64 lg:h-60 xl:h-72 mx-auto rounded-lg">
                 <img
@@ -92,18 +92,18 @@ const FeaturedItems = ({ brand }) => {
               )}
               <Link to={`/products/${item.slug}`} title={item.name}>
                 <div className="flex items-start justify-between mt-4 space-x-4">
-                  <div>
-                    <h3 className="text-xs font-bold text-gray-900 sm:text-sm md:text-base">
+                  <div className="w-[40%] sm:w-full">
+                    <h3 className="text-[12px] font-bold text-gray-900 sm:text-sm md:text-base">
                       {item.name}
                     </h3>
                     <p>{item.salt_compositions}</p>
                   </div>
 
-                  <div className="text-right">
+                  <div className="text-left sm:text-right">
                     {/* <p className="text-xs font-bold text-gray-900 sm:text-sm md:text-base">
                       ₹{item.selling_price}
                     </p> */}
-                    <h5 className="text-sm text-[#00A098]">
+                    <h5 className="text-[15px] sm:text-sm text-[#00A098]">
                       <strong>MRP</strong>
                     </h5>
                     {item.base_price && (

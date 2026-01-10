@@ -50,9 +50,9 @@ const ProductPage = () => {
     }
   };
 
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
+  // useEffect(() => {
+  //   fetchCartItems();
+  // }, []);
 
   // Add to Cart
   const handleAddToCart = async (productId) => {
@@ -61,7 +61,7 @@ const ProductPage = () => {
         position: "top-right",
         autoClose: 2000,
       });
-      setTimeout(() => navigate("/login"), 200000);
+      setTimeout(() => navigate("/login"), 2000);
       return;
     }
 

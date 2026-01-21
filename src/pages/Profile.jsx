@@ -21,7 +21,7 @@ const Profile = () => {
       FETCH PROFILE
   ========================== */
   useEffect(() => {
-    if (!auth?.access) {
+    if (!auth?.user) {
       navigate("/login");
       return;
     }
@@ -36,7 +36,7 @@ const Profile = () => {
         setPreview(
           profile.profile_photo
             ? `${axiosInstance.defaults.baseURL}${profile.profile_photo}`
-            : null
+            : null,
         );
       } catch (err) {
         logout();
@@ -95,7 +95,7 @@ const Profile = () => {
       setPreview(
         profile.profile_photo
           ? `${axiosInstance.defaults.baseURL}${profile.profile_photo}`
-          : null
+          : null,
       );
 
       setEditMode(false);

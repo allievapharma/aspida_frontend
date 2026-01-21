@@ -65,7 +65,7 @@ const Header = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      navigate(`/products/?search=${encodeURIComponent(query)}`);
+      navigate(`/products?search=${encodeURIComponent(query)}`);
       setQuery("");
     }
   };

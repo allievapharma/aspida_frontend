@@ -6,13 +6,10 @@ export const productsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://aspidalifesciences.com/api/",
     prepareHeaders: (headers) => {
-      // ✅ MUST MATCH AuthContext
       const token = localStorage.getItem("access_token");
-
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
-
       return headers;
     },
   }),
@@ -21,35 +18,38 @@ export const productsApi = createApi({
 
   endpoints: (builder) => ({
     /* ---------------- PRODUCTS ---------------- */
-
     getProducts: builder.query({
       query: ({
-        searchTerm = "",
-        brands = [],
+        search = "",
+        brand = "",
         category = "",
-        minPrice = "",
-        maxPrice = "",
+        subcategory = "",
         page = 1,
       }) => {
         const params = new URLSearchParams();
 
-        if (searchTerm) params.append("search", searchTerm);
+        if (search) params.append("search", search);
+        if (brand) params.append("brand", brand);
         if (category) params.append("category", category);
-        if (brands.length > 0) params.append("brand", brands.join(","));
-        if (minPrice) params.append("min_price", minPrice);
-        if (maxPrice) params.append("max_price", maxPrice);
+        if (subcategory) params.append("subcategory", subcategory);
         params.append("page", page);
 
         return `products/?${params.toString()}`;
       },
+      refetchOnMountOrArgChange: true,
     }),
 
     getProductBySlug: builder.query({
       query: (slug) => `products/${slug}/`,
     }),
 
-    /* ---------------- CART ---------------- */
+    /* ---------------- BRANDS ---------------- */
+    getBrands: builder.query({
+      query: (page = 1) => `brands/?page=${page}`,
+      refetchOnMountOrArgChange: true,
+    }),
 
+    /* ---------------- CART ---------------- */
     getCart: builder.query({
       query: () => "cart/",
       providesTags: ["Cart"],
@@ -86,8 +86,7 @@ export const productsApi = createApi({
 export const {
   useGetProductsQuery,
   useGetProductBySlugQuery,
-
-  // Cart hooks
+  useGetBrandsQuery,
   useGetCartQuery,
   useAddToCartMutation,
   useUpdateCartItemMutation,

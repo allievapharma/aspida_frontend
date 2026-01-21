@@ -208,13 +208,13 @@ const ProductPage = () => {
             <div className="flex gap-4">
               <button
                 onClick={() => handleAddToCart(product.id)}
-                className="mt-6 px-6 py-3 bg-[#017F80] text-white rounded-lg w-1/2 hover:bg-[#025f5f] transition"
+                className="mt-6 px-6 py-3 bg-[#017F80] text-white rounded-lg w-full hover:bg-[#025f5f] transition"
               >
                 Add To Cart
               </button>
-              <button className="mt-6 px-6 py-3 bg-gray-600 text-white rounded-lg w-1/2 hover:bg-gray-800 transition">
+              {/* <button className="mt-6 px-6 py-3 bg-gray-600 text-white rounded-lg w-1/2 hover:bg-gray-800 transition">
                 Compare
-              </button>
+              </button> */}
             </div>
 
             {/* Extra Info */}

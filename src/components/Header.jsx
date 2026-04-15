@@ -107,7 +107,7 @@ const Header = () => {
           {/* Desktop Menu */}
           <nav className="hidden md:flex gap-[26px] items-center text-white font-bold ml-[10px] mr-[10px] whitespace-nowrap">
             <Link to="/products" className="transition">
-              All Medicine
+              All Medicines
             </Link>
 
             {/* Dropdown */}

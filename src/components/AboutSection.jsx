@@ -31,7 +31,7 @@ function AboutSection() {
             About
           </h2>
           <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-4">
-            Welcome to Aspida Life Science, a fast-growing pharmaceutical and
+            Welcome to Aspida Life Sciences, a fast-growing pharmaceutical and
             life sciences company incorporated in 2020 in India. We are driven
             by one clear purpose — to make high-quality, affordable medicines
             accessible to everyone.
@@ -40,7 +40,7 @@ function AboutSection() {
             Our Story
           </h2>
           <p className="text-gray-700 text-sm md:text-base leading-relaxed mb-4">
-            At Aspida Life Science, we combine scientific expertise, strict
+            At Aspida Life Sciences, we combine scientific expertise, strict
             quality standards, and ethical business practices to deliver
             reliable healthcare solutions. Our operations are guided by
             compliance, consistency, and a strong commitment to patient
